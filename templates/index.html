@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fraud Payment Detection System</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <h2>Fraud Payment Detection System</h2>
+
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#prediction">Prediction</a></li>
+            <li><a href="#about">About</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <h1>Machine Learning Based Fraud Payment Detection</h1>
+        <p>
+            Detect fraudulent credit card transactions using Machine Learning
+            and Random Forest Classification.
+        </p>
+    </section>
+
+    <!-- Dashboard -->
+    <div class="dashboard">
+
+        <div class="card">
+            <h2>99.95%</h2>
+            <p>Accuracy</p>
+        </div>
+
+        <div class="card">
+            <h2>284807</h2>
+            <p>Total Transactions</p>
+        </div>
+
+        <div class="card">
+            <h2>492</h2>
+            <p>Fraud Transactions</p>
+        </div>
+
+        <div class="card">
+            <h2>284315</h2>
+            <p>Genuine Transactions</p>
+        </div>
+
+    </div>
+
+    <!-- Charts -->
+    <section class="charts">
+
+        <h2>Fraud Analytics Dashboard</h2>
+
+        <div class="chart-container">
+
+            <div class="chart-card">
+                <h3>Fraud Distribution</h3>
+                <canvas id="fraudChart"></canvas>
+            </div>
+
+            <div class="chart-card">
+                <h3>Transaction Analysis</h3>
+                <canvas id="transactionChart"></canvas>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- CSV Upload -->
+    <section class="upload-section">
+
+        <h2>Upload Transaction CSV File</h2>
+
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+
+            <input type="file" name="file" accept=".csv" required>
+
+            <br><br>
+
+            <button type="submit">Analyze CSV</button>
+
+        </form>
+
+    </section>
+
+    {% if risk %}
+<div class="risk-card">
+    <h2>Fraud Risk Level</h2>
+    <h1>{{ risk }}</h1>
+</div>
+{% endif %}
+
+    <hr>
+
+    <!-- Prediction Form -->
+    <section id="prediction">
+
+        <h1>Single Transaction Prediction</h1>
+
+        <form action="/predict" method="POST">
+
+            <input type="text" name="Time" placeholder="Time" required><br><br>
+
+            <input type="text" name="Amount" placeholder="Amount" required><br><br>
+
+            {% for i in range(1,29) %}
+            <input type="text" name="V{{i}}" placeholder="V{{i}}" required><br><br>
+            {% endfor %}
+
+            <button type="submit">Predict</button>
+
+        </form>
+
+    </section>
+
+    <!-- Prediction Result -->
+    {% if prediction_text %}
+<section class="result-box">
+
+    <h2>CSV Analysis Result</h2>
+
+    <pre>{{ prediction_text }}</pre>
+
+</section>
+{% endif %}
+
+    <!-- Recent Prediction -->
+    <section class="prediction-box">
+
+        <h2>Recent Prediction</h2>
+
+        <table class="history-table">
+
+            <tr>
+                <th>Prediction</th>
+                <th>Status</th>
+            </tr>
+
+            <tr>
+                <td>{{ prediction_text }}</td>
+                <td>Completed</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+    <hr>
+
+    <!-- About -->
+    <section id="about" class="project-details">
+
+        <h2>Project Details</h2>
+
+        <p><b>Algorithm:</b> Random Forest Classifier</p>
+
+        <p><b>Dataset:</b> Credit Card Fraud Detection Dataset</p>
+
+        <p><b>Accuracy:</b> 99.95%</p>
+
+        <p><b>Technologies:</b> Python, Flask, HTML, CSS, JavaScript, Machine Learning</p>
+
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+
+        <p>© 2026 Fraud Payment Detection System</p>
+
+        <p>Developed by Srinidhi</p>
+
+        <p>Python | Flask | HTML | CSS | JavaScript | Machine Learning</p>
+
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>
